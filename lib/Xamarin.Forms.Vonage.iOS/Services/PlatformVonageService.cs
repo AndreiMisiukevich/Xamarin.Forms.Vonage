@@ -113,6 +113,11 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
         public override bool TrySendMessage(string message)
         {
+            if (Session == null)
+            {
+                return false;
+            }
+
             Session.SignalWithType(string.Empty, message, null, out OTError error);
             using (error)
             {
@@ -286,16 +291,23 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
         private void ClearSubscriber(OTSubscriber subscriberKit)
         {
-            using (subscriberKit)
+            try
             {
-                subscriberKit.SubscribeToAudio = false;
-                subscriberKit.SubscribeToVideo = false;
-                subscriberKit.DidConnectToStream -= OnSubscriberConnected;
-                subscriberKit.DidDisconnectFromStream -= OnSubscriberDisconnected;
-                subscriberKit.VideoDataReceived -= OnSubscriberVideoDataReceived;
-                subscriberKit.VideoEnabled -= OnSubscriberVideoEnabled;
-                subscriberKit.VideoDisabled -= OnSubscriberVideoDisabled;
-                Session.Unsubscribe(subscriberKit);
+                using (subscriberKit)
+                {
+                    subscriberKit.SubscribeToAudio = false;
+                    subscriberKit.SubscribeToVideo = false;
+                    subscriberKit.DidConnectToStream -= OnSubscriberConnected;
+                    subscriberKit.DidDisconnectFromStream -= OnSubscriberDisconnected;
+                    subscriberKit.VideoDataReceived -= OnSubscriberVideoDataReceived;
+                    subscriberKit.VideoEnabled -= OnSubscriberVideoEnabled;
+                    subscriberKit.VideoDisabled -= OnSubscriberVideoDisabled;
+                    Session.Unsubscribe(subscriberKit);
+                }
+            }
+            catch(ObjectDisposedException)
+            {
+                // Skip
             }
         }
 

@@ -128,6 +128,11 @@ namespace Xamarin.Forms.Vonage.Android.Services
 
         public override bool TrySendMessage(string message)
         {
+            if (Session == null)
+            {
+                return false;
+            }
+
             Session.SendSignal(string.Empty, message);
             return true;
         }
