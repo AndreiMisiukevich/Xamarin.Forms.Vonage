@@ -206,6 +206,13 @@ namespace Xamarin.Forms.Vonage.Android.Services
                 yield return Manifest.Permission.ModifyAudioSettings;
             }
 
+            if (Permissions.HasFlag(VonagePermission.Bluetooth))
+            {
+                yield return Manifest.Permission.Bluetooth;
+            }
+
+            yield return Manifest.Permission.ReadPhoneState;
+
             yield return Manifest.Permission.Internet;
 
             yield return Manifest.Permission.AccessNetworkState;
