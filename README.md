@@ -51,7 +51,7 @@ protected override void OnCreate(Bundle savedInstanceState)
 }
 ```
 
-* Add permissions to Manifest file
+* Add permissions to Manifest file.
 ```xml
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -59,6 +59,8 @@ protected override void OnCreate(Bundle savedInstanceState)
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 ```
 
 ## Samples
