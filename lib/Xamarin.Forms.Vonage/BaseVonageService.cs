@@ -72,6 +72,12 @@ namespace Xamarin.Forms.Vonage
             set => SetValue(value);
         }
 
+        public bool IgnoreSentMessages
+        {
+            get => GetValue(false);
+            set => SetValue(value);
+        }
+
         public string ApiKey
         {
             get => GetValue(string.Empty);

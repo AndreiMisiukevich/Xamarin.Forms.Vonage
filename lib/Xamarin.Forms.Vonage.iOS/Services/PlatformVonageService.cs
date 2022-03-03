@@ -287,7 +287,12 @@ namespace Xamarin.Forms.Vonage.iOS.Services
             => IsPublishingStarted = true;
 
         private void OnSignalReceived(object sender, OTSessionDelegateSignalEventArgs e)
-            => RaiseMessageReceived(e.StringData);
+        {
+            if (!(IgnoreSentMessages && e.Connection.ConnectionId == Session.Connection.ConnectionId))
+            {
+                RaiseMessageReceived(e.StringData);
+            }
+        }
 
         private void ClearSubscriber(OTSubscriber subscriberKit)
         {
@@ -305,7 +310,7 @@ namespace Xamarin.Forms.Vonage.iOS.Services
                     Session.Unsubscribe(subscriberKit);
                 }
             }
-            catch(ObjectDisposedException)
+            catch (ObjectDisposedException)
             {
                 // Skip
             }

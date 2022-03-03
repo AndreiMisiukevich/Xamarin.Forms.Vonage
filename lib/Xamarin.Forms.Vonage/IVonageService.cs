@@ -43,6 +43,8 @@ namespace Xamarin.Forms.Vonage
 
         bool IsPublishingStarted { get; set; }
 
+        bool IgnoreSentMessages { get; set; }
+
         CameraResolution PublisherCameraResolution { get; set; }
 
         bool CheckPermissions();

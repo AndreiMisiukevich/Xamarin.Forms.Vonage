@@ -336,7 +336,12 @@ namespace Xamarin.Forms.Vonage.Android.Services
             => IsPublishingStarted = true;
 
         private void OnSignal(object sender, Session.SignalEventArgs e)
-            => RaiseMessageReceived(e.P2);
+        {
+            if (!(IgnoreSentMessages && e.P3.ConnectionId == Session.Connection.ConnectionId))
+            {
+                RaiseMessageReceived(e.P2);
+            }
+        }
 
         private void ClearSubscriber(SubscriberKit subscriberKit)
         {
