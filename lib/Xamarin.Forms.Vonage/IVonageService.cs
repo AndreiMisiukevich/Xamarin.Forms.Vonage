@@ -37,6 +37,8 @@ namespace Xamarin.Forms.Vonage
 
         string UserToken { get; set; }
 
+        string PublisherName { get; set; }
+
         bool IsSessionStarted { get; set; }
 
         bool IsPublishingStarted { get; set; }

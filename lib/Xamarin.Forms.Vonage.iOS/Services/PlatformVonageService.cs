@@ -190,7 +190,7 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
             PublisherKit = new OTPublisher(null, new OTPublisherSettings
             {
-                Name = "XamarinVonage",
+                Name = PublisherName,
                 CameraFrameRate = OTCameraCaptureFrameRate.OTCameraCaptureFrameRate15FPS,
                 CameraResolution = OTCameraCaptureResolution.High,
                 VideoTrack = Permissions.HasFlag(VonagePermission.Camera),

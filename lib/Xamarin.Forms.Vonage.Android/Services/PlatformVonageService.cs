@@ -238,7 +238,7 @@ namespace Xamarin.Forms.Vonage.Android.Services
                 .Resolution(cameraResolutions[PublisherCameraResolution])
                 .VideoTrack(Permissions.HasFlag(VonagePermission.Camera))
                 .AudioTrack(Permissions.HasFlag(VonagePermission.RecordAudio))
-                .Name("XamarinVonage");
+                .Name(PublisherName);
             PublisherKit = builder.Build();
             PublisherKit.PublishVideo = IsVideoPublishingEnabled;
             PublisherKit.PublishAudio = IsAudioPublishingEnabled;

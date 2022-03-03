@@ -108,6 +108,12 @@ namespace Xamarin.Forms.Vonage
             set => SetValue(value);
         }
 
+        public string PublisherName
+        {
+            get => GetValue(string.Empty);
+            set => SetValue(value);
+        }
+
         public abstract bool CheckPermissions();
 
         public abstract bool TryStartSession();
