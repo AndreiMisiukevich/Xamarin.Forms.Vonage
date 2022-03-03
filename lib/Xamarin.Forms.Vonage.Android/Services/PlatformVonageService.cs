@@ -132,14 +132,14 @@ namespace Xamarin.Forms.Vonage.Android.Services
             return !shouldGrantPermissions;
         }
 
-        public override bool TrySendMessage(string message)
+        public override bool TrySendMessage(string signalType, string message)
         {
             if (Session == null)
             {
                 return false;
             }
 
-            Session.SendSignal(string.Empty, message);
+            Session.SendSignal(signalType, message);
             return true;
         }
 

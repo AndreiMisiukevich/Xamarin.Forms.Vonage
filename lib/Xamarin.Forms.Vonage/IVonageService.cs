@@ -49,7 +49,7 @@ namespace Xamarin.Forms.Vonage
 
         bool TryStartSession();
 
-        bool TrySendMessage(string message);
+        bool TrySendMessage(string signalType, string message);
 
         void EndSession();
 

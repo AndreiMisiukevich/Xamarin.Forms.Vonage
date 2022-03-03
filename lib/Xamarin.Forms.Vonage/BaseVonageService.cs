@@ -118,7 +118,7 @@ namespace Xamarin.Forms.Vonage
 
         public abstract bool TryStartSession();
 
-        public abstract bool TrySendMessage(string message);
+        public abstract bool TrySendMessage(string signalType, string message);
 
         public abstract void EndSession();
 

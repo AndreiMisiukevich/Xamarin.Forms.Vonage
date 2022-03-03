@@ -111,14 +111,14 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
         public override bool CheckPermissions() => true;
 
-        public override bool TrySendMessage(string message)
+        public override bool TrySendMessage(string signalType, string message)
         {
             if (Session == null)
             {
                 return false;
             }
 
-            Session.SignalWithType(string.Empty, message, null, out OTError error);
+            Session.SignalWithType(signalType, message, null, out OTError error);
             using (error)
             {
                 return error == null;
