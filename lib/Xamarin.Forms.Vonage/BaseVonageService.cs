@@ -102,6 +102,12 @@ namespace Xamarin.Forms.Vonage
             set => SetValue(value);
         }
 
+        public CameraResolution PublisherCameraResolution
+        {
+            get => GetValue(CameraResolution.Medium);
+            set => SetValue(value);
+        }
+
         public abstract bool CheckPermissions();
 
         public abstract bool TryStartSession();

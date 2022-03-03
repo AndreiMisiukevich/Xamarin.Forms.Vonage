@@ -21,6 +21,12 @@ namespace Xamarin.Forms.Vonage.Android.Services
         private readonly object _sessionLocker = new();
         private readonly ObservableCollection<string> _subscriberStreamIds = new();
         private readonly Collection<SubscriberKit> _subscribers = new();
+        private static readonly Dictionary<CameraResolution, Publisher.CameraCaptureResolution> cameraResolutions = new Dictionary<CameraResolution, Publisher.CameraCaptureResolution>()
+        {
+            { CameraResolution.Low, Publisher.CameraCaptureResolution.Low },
+            { CameraResolution.Medium, Publisher.CameraCaptureResolution.Medium },
+            { CameraResolution.High, Publisher.CameraCaptureResolution.High }
+        };
 
         public PlatformVonageService()
         {
@@ -229,7 +235,7 @@ namespace Xamarin.Forms.Vonage.Android.Services
             ClearPublisher();
 
             using var builder = new Publisher.Builder(PlatformVonage.Activity.ApplicationContext)
-                .Resolution(Publisher.CameraCaptureResolution.High)
+                .Resolution(cameraResolutions[PublisherCameraResolution])
                 .VideoTrack(Permissions.HasFlag(VonagePermission.Camera))
                 .AudioTrack(Permissions.HasFlag(VonagePermission.RecordAudio))
                 .Name("XamarinVonage");
