@@ -111,14 +111,14 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
         public override bool CheckPermissions() => true;
 
-        public override bool TrySendMessage(string signalType, string message)
+        public override bool TrySendMessage(string message, string messageType)
         {
             if (Session == null)
             {
                 return false;
             }
 
-            Session.SignalWithType(signalType, message, null, out OTError error);
+            Session.SignalWithType(messageType ?? string.Empty, message, null, out OTError error);
             using (error)
             {
                 return error == null;
@@ -129,14 +129,16 @@ namespace Xamarin.Forms.Vonage.iOS.Services
         {
             switch (e.PropertyName)
             {
+                case nameof(PublisherName):
+                case nameof(PublisherVideoType):
+                case nameof(PublisherCameraResolution):
+                    OnDidConnect(this, EventArgs.Empty);
+                    return;
                 case nameof(IsVideoPublishingEnabled):
                     UpdatePublisherProperty(p => p.PublishVideo = IsVideoPublishingEnabled);
                     return;
                 case nameof(IsAudioPublishingEnabled):
                     UpdatePublisherProperty(p => p.PublishAudio = IsAudioPublishingEnabled);
-                    return;
-                case nameof(PublisherVideoType):
-                    OnDidConnect(this, EventArgs.Empty);
                     return;
                 case nameof(IsVideoSubscriptionEnabled):
                     UpdateSubscriberProperty(s => s.SubscribeToVideo = IsVideoSubscriptionEnabled);
@@ -192,9 +194,9 @@ namespace Xamarin.Forms.Vonage.iOS.Services
             {
                 Name = PublisherName,
                 CameraFrameRate = OTCameraCaptureFrameRate.OTCameraCaptureFrameRate15FPS,
-                CameraResolution = OTCameraCaptureResolution.High,
+                CameraResolution = GetResolution(),
                 VideoTrack = Permissions.HasFlag(VonagePermission.Camera),
-                AudioTrack = Permissions.HasFlag(VonagePermission.RecordAudio)
+                AudioTrack = Permissions.HasFlag(VonagePermission.RecordAudio),
             })
             {
                 PublishVideo = IsVideoPublishingEnabled,
@@ -202,7 +204,7 @@ namespace Xamarin.Forms.Vonage.iOS.Services
                 AudioFallbackEnabled = PublisherVideoType == VonagePublisherVideoType.Camera,
                 VideoType = PublisherVideoType == VonagePublisherVideoType.Camera
                     ? OTPublisherKitVideoType.Camera
-                    : OTPublisherKitVideoType.Screen
+                    : OTPublisherKitVideoType.Screen,
             };
             PublisherKit.StreamCreated += OnPublisherStreamCreated;
             Session.Publish(PublisherKit);
@@ -240,7 +242,7 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
         private void OnError(object sender, OTSessionDelegateErrorEventArgs e)
         {
-            RaiseError(e.Error?.Code.ToString(CultureInfo.CurrentUICulture));
+            RaiseErrorOccurred(e.Error?.Code.ToString(CultureInfo.CurrentUICulture));
             EndSession();
         }
 
@@ -288,9 +290,9 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
         private void OnSignalReceived(object sender, OTSessionDelegateSignalEventArgs e)
         {
-            if (!(IgnoreSentMessages && e.Connection.ConnectionId == Session.Connection.ConnectionId))
+            if (e.Connection.ConnectionId != Session.Connection.ConnectionId)
             {
-                RaiseMessageReceived(e.StringData);
+                RaiseMessageReceived(e.StringData, e.Type);
             }
         }
 
@@ -331,6 +333,17 @@ namespace Xamarin.Forms.Vonage.iOS.Services
                 Session.Unpublish(PublisherKit);
             }
             PublisherKit = null;
+        }
+
+        private OTCameraCaptureResolution GetResolution()
+        {
+            switch (PublisherCameraResolution)
+            {
+                case VonagePublisherCameraResolution.High: return OTCameraCaptureResolution.High;
+                case VonagePublisherCameraResolution.Medium: return OTCameraCaptureResolution.Medium;
+                case VonagePublisherCameraResolution.Low: return OTCameraCaptureResolution.Low;
+                default: return OTCameraCaptureResolution.High;
+            }
         }
     }
 }

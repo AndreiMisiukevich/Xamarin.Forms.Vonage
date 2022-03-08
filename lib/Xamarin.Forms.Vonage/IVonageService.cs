@@ -5,11 +5,18 @@ using System.Collections.Specialized;
 
 namespace Xamarin.Forms.Vonage
 {
+    [EditorBrowsable(EditorBrowsableState.Always)]
     public interface IVonageService : INotifyPropertyChanged
     {
-        event Action<string> Error;
+        [Obsolete("Please use ErrorOccurred event instead")]
+        public event Action<string> Error;
 
-        event Action<string> MessageReceived;
+        [Obsolete("Please use TextMessageReceived event instead")]
+        public event Action<string> MessageReceived;
+
+        public event EventHandler<VonageErrorOccurredEventArgs> ErrorOccurred;
+
+        public event EventHandler<VonageTextMessageReceivedEventArgs> TextMessageReceived;
 
         event NotifyCollectionChangedEventHandler StreamIdCollectionChanged;
 
@@ -43,15 +50,13 @@ namespace Xamarin.Forms.Vonage
 
         bool IsPublishingStarted { get; set; }
 
-        bool IgnoreSentMessages { get; set; }
-
-        CameraResolution PublisherCameraResolution { get; set; }
+        VonagePublisherCameraResolution PublisherCameraResolution { get; set; }
 
         bool CheckPermissions();
 
         bool TryStartSession();
 
-        bool TrySendMessage(string signalType, string message);
+        bool TrySendMessage(string message, string messageType = null);
 
         void EndSession();
 

@@ -16,6 +16,10 @@ namespace Xamarin.Forms.Vonage
 
         public event Action<string> MessageReceived;
 
+        public event EventHandler<VonageErrorOccurredEventArgs> ErrorOccurred;
+
+        public event EventHandler<VonageTextMessageReceivedEventArgs> TextMessageReceived;
+
         public event NotifyCollectionChangedEventHandler StreamIdCollectionChanged;
 
         public abstract ReadOnlyObservableCollection<string> StreamIdCollection { get; }
@@ -72,12 +76,6 @@ namespace Xamarin.Forms.Vonage
             set => SetValue(value);
         }
 
-        public bool IgnoreSentMessages
-        {
-            get => GetValue(false);
-            set => SetValue(value);
-        }
-
         public string ApiKey
         {
             get => GetValue(string.Empty);
@@ -108,15 +106,15 @@ namespace Xamarin.Forms.Vonage
             set => SetValue(value);
         }
 
-        public CameraResolution PublisherCameraResolution
+        public VonagePublisherCameraResolution PublisherCameraResolution
         {
-            get => GetValue(CameraResolution.Medium);
+            get => GetValue(VonagePublisherCameraResolution.High);
             set => SetValue(value);
         }
 
         public string PublisherName
         {
-            get => GetValue(string.Empty);
+            get => GetValue("XamarinVonage");
             set => SetValue(value);
         }
 
@@ -124,16 +122,27 @@ namespace Xamarin.Forms.Vonage
 
         public abstract bool TryStartSession();
 
-        public abstract bool TrySendMessage(string signalType, string message);
+        public abstract bool TrySendMessage(string message, string messageType);
 
         public abstract void EndSession();
 
         public abstract void CycleCamera();
 
-        protected void RaiseError(string message) => Error?.Invoke(message);
+        protected void RaiseErrorOccurred(string message)
+        {
+            ErrorOccurred?.Invoke(this, new VonageErrorOccurredEventArgs(message));
+#pragma warning disable
+            Error?.Invoke(message);
+#pragma warning restore
+        }
 
-        protected void RaiseMessageReceived(string message) 
-            => MessageReceived?.Invoke(message);
+        protected void RaiseMessageReceived(string message, string messageType)
+        {
+            TextMessageReceived?.Invoke(this, new VonageTextMessageReceivedEventArgs(message, messageType));
+#pragma warning disable
+            MessageReceived?.Invoke(message);
+#pragma warning restore
+        }
 
         protected void OnSubscriberStreamIdsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
             => StreamIdCollectionChanged?.Invoke(sender, e);

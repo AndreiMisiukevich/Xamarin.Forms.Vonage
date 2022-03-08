@@ -12,18 +12,18 @@ namespace Xamarin.Forms.VonageSample
         public ChatRoomPage()
         {
             InitializeComponent();
-            CrossVonage.Current.MessageReceived += OnMessageReceived;
+            CrossVonage.Current.TextMessageReceived += OnMessageReceived; ;
         }
 
         private void OnEndCall(object sender, EventArgs e)
         {
             CrossVonage.Current.EndSession();
-            CrossVonage.Current.MessageReceived -= OnMessageReceived;
+            CrossVonage.Current.TextMessageReceived -= OnMessageReceived;
             Navigation.PopAsync();
         }
 
         private void OnMessage(object sender, EventArgs e)
-            => CrossVonage.Current.TrySendMessage("textMessage", $"Path.GetRandomFileName: {Path.GetRandomFileName()}");
+            => CrossVonage.Current.TrySendMessage($"Path.GetRandomFileName: {Path.GetRandomFileName()}", "textMessage");
 
         private void OnSwapCamera(object sender, EventArgs e)
             => CrossVonage.Current.CycleCamera();
@@ -35,8 +35,8 @@ namespace Xamarin.Forms.VonageSample
                 : VonagePublisherVideoType.Camera;
         }
 
-        private void OnMessageReceived(string message)
-            => DisplayAlert("Random message received", message, "OK");
+        private void OnMessageReceived(object sender, VonageTextMessageReceivedEventArgs e)
+            => DisplayAlert($"Message with type: {e.MessageType}", e.Message, "OK");
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -1,6 +1,6 @@
 ﻿namespace Xamarin.Forms.Vonage
 {
-    public enum CameraResolution
+    public enum VonagePublisherCameraResolution
     {
         Low,
         Medium,
