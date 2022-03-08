@@ -37,15 +37,21 @@ namespace Xamarin.Forms.Vonage
 
         string UserToken { get; set; }
 
+        string PublisherName { get; set; }
+
         bool IsSessionStarted { get; set; }
 
         bool IsPublishingStarted { get; set; }
+
+        bool IgnoreSentMessages { get; set; }
+
+        CameraResolution PublisherCameraResolution { get; set; }
 
         bool CheckPermissions();
 
         bool TryStartSession();
 
-        bool TrySendMessage(string message);
+        bool TrySendMessage(string signalType, string message);
 
         void EndSession();
 

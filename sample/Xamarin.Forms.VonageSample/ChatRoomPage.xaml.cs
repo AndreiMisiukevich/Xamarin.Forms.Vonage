@@ -23,7 +23,7 @@ namespace Xamarin.Forms.VonageSample
         }
 
         private void OnMessage(object sender, EventArgs e)
-            => CrossVonage.Current.TrySendMessage($"Path.GetRandomFileName: {Path.GetRandomFileName()}");
+            => CrossVonage.Current.TrySendMessage("textMessage", $"Path.GetRandomFileName: {Path.GetRandomFileName()}");
 
         private void OnSwapCamera(object sender, EventArgs e)
             => CrossVonage.Current.CycleCamera();

@@ -111,14 +111,14 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
         public override bool CheckPermissions() => true;
 
-        public override bool TrySendMessage(string message)
+        public override bool TrySendMessage(string signalType, string message)
         {
             if (Session == null)
             {
                 return false;
             }
 
-            Session.SignalWithType(string.Empty, message, null, out OTError error);
+            Session.SignalWithType(signalType, message, null, out OTError error);
             using (error)
             {
                 return error == null;
@@ -190,7 +190,7 @@ namespace Xamarin.Forms.Vonage.iOS.Services
 
             PublisherKit = new OTPublisher(null, new OTPublisherSettings
             {
-                Name = "XamarinVonage",
+                Name = PublisherName,
                 CameraFrameRate = OTCameraCaptureFrameRate.OTCameraCaptureFrameRate15FPS,
                 CameraResolution = OTCameraCaptureResolution.High,
                 VideoTrack = Permissions.HasFlag(VonagePermission.Camera),
@@ -287,7 +287,12 @@ namespace Xamarin.Forms.Vonage.iOS.Services
             => IsPublishingStarted = true;
 
         private void OnSignalReceived(object sender, OTSessionDelegateSignalEventArgs e)
-            => RaiseMessageReceived(e.StringData);
+        {
+            if (!(IgnoreSentMessages && e.Connection.ConnectionId == Session.Connection.ConnectionId))
+            {
+                RaiseMessageReceived(e.StringData);
+            }
+        }
 
         private void ClearSubscriber(OTSubscriber subscriberKit)
         {
@@ -305,7 +310,7 @@ namespace Xamarin.Forms.Vonage.iOS.Services
                     Session.Unsubscribe(subscriberKit);
                 }
             }
-            catch(ObjectDisposedException)
+            catch (ObjectDisposedException)
             {
                 // Skip
             }

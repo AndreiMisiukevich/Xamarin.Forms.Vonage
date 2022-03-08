@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Xamarin.Forms.Vonage</id>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <title>Xamarin.Forms.Vonage</title>
     <authors>Andrei Misiukevich</authors>
     <owners>Andrei Misiukevich</owners>
@@ -15,13 +15,13 @@
     <tags>vonage, opentok, tokbox, videochat, video, chat, video streaming, xamarin forms, audio</tags>
     <dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="3.0" />
+        <dependency id="Xamarin.Forms" version="5.0.0.2337" />
       </group>
       <group targetFramework="Xamarin.iOS10">
-        <dependency id="Xamarin.Vonage.iOS" version="2.20.0" />
+        <dependency id="Xamarin.Vonage.iOS" version="2.21.3" />
       </group>
       <group targetFramework="MonoAndroid10">
-        <dependency id="Xamarin.Vonage.Android" version="2.20.1" />
+        <dependency id="Xamarin.Vonage.Android" version="2.21.3" />
       </group>
       <group targetFramework="netstandard20" />
     </dependencies>

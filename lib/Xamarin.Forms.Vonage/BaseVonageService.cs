@@ -72,6 +72,12 @@ namespace Xamarin.Forms.Vonage
             set => SetValue(value);
         }
 
+        public bool IgnoreSentMessages
+        {
+            get => GetValue(false);
+            set => SetValue(value);
+        }
+
         public string ApiKey
         {
             get => GetValue(string.Empty);
@@ -102,11 +108,23 @@ namespace Xamarin.Forms.Vonage
             set => SetValue(value);
         }
 
+        public CameraResolution PublisherCameraResolution
+        {
+            get => GetValue(CameraResolution.Medium);
+            set => SetValue(value);
+        }
+
+        public string PublisherName
+        {
+            get => GetValue(string.Empty);
+            set => SetValue(value);
+        }
+
         public abstract bool CheckPermissions();
 
         public abstract bool TryStartSession();
 
-        public abstract bool TrySendMessage(string message);
+        public abstract bool TrySendMessage(string signalType, string message);
 
         public abstract void EndSession();
 

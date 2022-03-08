@@ -21,6 +21,12 @@ namespace Xamarin.Forms.Vonage.Android.Services
         private readonly object _sessionLocker = new();
         private readonly ObservableCollection<string> _subscriberStreamIds = new();
         private readonly Collection<SubscriberKit> _subscribers = new();
+        private static readonly Dictionary<CameraResolution, Publisher.CameraCaptureResolution> cameraResolutions = new Dictionary<CameraResolution, Publisher.CameraCaptureResolution>()
+        {
+            { CameraResolution.Low, Publisher.CameraCaptureResolution.Low },
+            { CameraResolution.Medium, Publisher.CameraCaptureResolution.Medium },
+            { CameraResolution.High, Publisher.CameraCaptureResolution.High }
+        };
 
         public PlatformVonageService()
         {
@@ -126,14 +132,14 @@ namespace Xamarin.Forms.Vonage.Android.Services
             return !shouldGrantPermissions;
         }
 
-        public override bool TrySendMessage(string message)
+        public override bool TrySendMessage(string signalType, string message)
         {
             if (Session == null)
             {
                 return false;
             }
 
-            Session.SendSignal(string.Empty, message);
+            Session.SendSignal(signalType, message);
             return true;
         }
 
@@ -229,10 +235,10 @@ namespace Xamarin.Forms.Vonage.Android.Services
             ClearPublisher();
 
             using var builder = new Publisher.Builder(PlatformVonage.Activity.ApplicationContext)
-                .Resolution(Publisher.CameraCaptureResolution.High)
+                .Resolution(cameraResolutions[PublisherCameraResolution])
                 .VideoTrack(Permissions.HasFlag(VonagePermission.Camera))
                 .AudioTrack(Permissions.HasFlag(VonagePermission.RecordAudio))
-                .Name("XamarinVonage");
+                .Name(PublisherName);
             PublisherKit = builder.Build();
             PublisherKit.PublishVideo = IsVideoPublishingEnabled;
             PublisherKit.PublishAudio = IsAudioPublishingEnabled;
@@ -330,7 +336,12 @@ namespace Xamarin.Forms.Vonage.Android.Services
             => IsPublishingStarted = true;
 
         private void OnSignal(object sender, Session.SignalEventArgs e)
-            => RaiseMessageReceived(e.P2);
+        {
+            if (!(IgnoreSentMessages && e.P3.ConnectionId == Session.Connection.ConnectionId))
+            {
+                RaiseMessageReceived(e.P2);
+            }
+        }
 
         private void ClearSubscriber(SubscriberKit subscriberKit)
         {

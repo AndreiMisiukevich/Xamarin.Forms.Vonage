@@ -55,10 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
-      <Version>5.0.0.2012</Version>
+      <Version>5.0.0.2337</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Vonage.iOS">
-      <Version>2.20.0</Version>
+      <Version>2.21.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
