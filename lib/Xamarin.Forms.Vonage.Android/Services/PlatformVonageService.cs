@@ -9,6 +9,7 @@ using Android.Support.V4.Content;
 using Com.Opentok.Android;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using Android.OS;
 
 namespace Xamarin.Forms.Vonage.Android.Services
 {
@@ -193,7 +194,7 @@ namespace Xamarin.Forms.Vonage.Android.Services
                 yield return Manifest.Permission.Camera;
             }
 
-            if (Permissions.HasFlag(VonagePermission.WriteExternalStorage))
+            if (Permissions.HasFlag(VonagePermission.WriteExternalStorage) && (int)Build.VERSION.SdkInt < 33)
             {
                 yield return Manifest.Permission.WriteExternalStorage;
             }
@@ -211,6 +212,24 @@ namespace Xamarin.Forms.Vonage.Android.Services
             if (Permissions.HasFlag(VonagePermission.Bluetooth))
             {
                 yield return Manifest.Permission.Bluetooth;
+            }
+
+            if ((int)Build.VERSION.SdkInt >= 33)
+            {
+                if (Permissions.HasFlag(VonagePermission.ReadMediaAudio))
+                {
+                    yield return Manifest.Permission.ReadMediaAudio;
+                }
+
+                if (Permissions.HasFlag(VonagePermission.ReadMediaImages))
+                {
+                    yield return Manifest.Permission.ReadMediaImages;
+                }
+
+                if (Permissions.HasFlag(VonagePermission.ReadMediaVideo))
+                {
+                    yield return Manifest.Permission.ReadMediaVideo;
+                }
             }
 
             yield return Manifest.Permission.Internet;

@@ -139,6 +139,8 @@
     <ProjectReference Include="..\..\lib\Xamarin.Forms.Vonage.iOS\Xamarin.Forms.Vonage.iOS.csproj">
       <Project>{8C0B31C6-1AD3-4833-8C91-6F892612687D}</Project>
       <Name>Xamarin.Forms.Vonage.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
 </Project>

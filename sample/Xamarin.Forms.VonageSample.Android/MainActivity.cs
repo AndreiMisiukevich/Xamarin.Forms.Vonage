@@ -8,7 +8,9 @@ using Xamarin.Forms.Platform.Android;
 
 namespace Xamarin.Forms.VonageSample.Droid
 {
-    [Activity(Label = "Xamarin.Forms.VonageSample", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    [Activity(Label = "Xamarin.Forms.VonageSample", Icon = "@mipmap/icon", Theme = "@style/MainTheme",
+        LaunchMode = LaunchMode.SingleTop,
+        MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
