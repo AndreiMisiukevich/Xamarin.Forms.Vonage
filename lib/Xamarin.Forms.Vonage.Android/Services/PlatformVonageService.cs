@@ -194,9 +194,12 @@ namespace Xamarin.Forms.Vonage.Android.Services
                 yield return Manifest.Permission.Camera;
             }
 
-            if (Permissions.HasFlag(VonagePermission.WriteExternalStorage) && (int)Build.VERSION.SdkInt < 33)
+            if ((int)Build.VERSION.SdkInt < 33)
             {
-                yield return Manifest.Permission.WriteExternalStorage;
+                if (Permissions.HasFlag(VonagePermission.WriteExternalStorage)
+                {
+                    yield return Manifest.Permission.WriteExternalStorage;
+                }
             }
 
             if (Permissions.HasFlag(VonagePermission.RecordAudio))
