@@ -15,9 +15,6 @@ namespace Xamarin.Forms.VonageSample
                         VerticalOptions = LayoutOptions.CenterAndExpand,
                         Text = "CLICK TO CHAT",
                         Command = new Command(() => {
-
-                            var permissionResult= CrossVonage.Current.CheckPermissions();
-
                             if(!CrossVonage.Current.TryStartSession())
                             {
                                 return;
