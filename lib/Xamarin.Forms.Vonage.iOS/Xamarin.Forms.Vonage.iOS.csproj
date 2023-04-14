@@ -42,8 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Properties\" />
-    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">
-      <Version>5.0.0.2515</Version>
+      <Version>5.0.0.2578</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Vonage.iOS">
       <Version>2.21.3</Version>

@@ -4,12 +4,12 @@ using System.Linq;
 using Android;
 using Android.Content.PM;
 using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Support.V4.Content;
 using Com.Opentok.Android;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Android.OS;
+using AndroidX.Core.Content;
+using AndroidX.Core.App;
 
 namespace Xamarin.Forms.Vonage.Android.Services
 {
@@ -196,7 +196,7 @@ namespace Xamarin.Forms.Vonage.Android.Services
 
             if ((int)Build.VERSION.SdkInt < 33)
             {
-                if (Permissions.HasFlag(VonagePermission.WriteExternalStorage)
+                if (Permissions.HasFlag(VonagePermission.WriteExternalStorage))
                 {
                     yield return Manifest.Permission.WriteExternalStorage;
                 }
