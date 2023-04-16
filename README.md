@@ -61,7 +61,13 @@ protected override void OnCreate(Bundle savedInstanceState)
 	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 ```
+
+* checking for permission "WRITE_EXTERNAL_STORAGE" will return false from Android13 and not required.
+* add READ_MEDIA_AUDIO, READ_MEDIA_IMAGES, READ_MEDIA_VIDEO from Android 13
 
 ## Samples
 

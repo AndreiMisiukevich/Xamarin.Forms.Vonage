@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Vonage
         /// <summary>
         /// If your app does not does not write to external storage, you can remove this permission.
         /// </summary>
+        /// this is obsolete with Android 13, will always get false
         WriteExternalStorage = 2,
 
         /// <summary>
@@ -34,10 +35,14 @@ namespace Xamarin.Forms.Vonage
         /// The default audio device supports Bluetooth audio. If your app does not use the default audio device and does not use Bluetooth, you can remove this permission.
         /// </summary>
         Bluetooth,
+        ReadMediaAudio,
+        ReadMediaImages,
+        ReadMediaVideo,
 
         /// <summary>
         /// Camera & WriteExternalStorage & RecordAudio & ModifyAudioSettings & Bluetooth
         /// </summary>
-        All = Camera | WriteExternalStorage | RecordAudio | ModifyAudioSettings | Bluetooth
+        //All = Camera | WriteExternalStorage | RecordAudio | ModifyAudioSettings | Bluetooth | ReadMediaAudio | ReadMediaImages | ReadMediaVideo
+        All = Camera | RecordAudio | ModifyAudioSettings | Bluetooth | ReadMediaAudio | ReadMediaImages | ReadMediaVideo
     }
 }
